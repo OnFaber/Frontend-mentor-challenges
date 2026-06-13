@@ -1,3 +1,7 @@
+@font-face {
+  font-family: figtree;
+  src: url("../fonts/Figtree-VariableFont_wght.ttf") format("truetype");
+}
 * {
   margin: 0;
   padding: 0;
