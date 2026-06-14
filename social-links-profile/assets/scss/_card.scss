@@ -1,0 +1,93 @@
+.card {
+    --card-bg: #{base.$grey-800};
+    --card-height: #{base.$card-height};
+    --card-color: #{base.$card-color};
+    --card-border-width: #{base.$card-border-width};
+    --card-border-color: #{base.$card-border-color};
+    --card-border-radius: #{base.$card-border-radius};
+    --card-box-shadow: #{base.$card-box-shadow};
+    --card-title-spacer-y: #{base.$card-title-spacer-y};
+    --card-title-color: #{base.$card-title-color};
+    --card-subtitle-color: #{base.$card-subtitle-color};    
+    
+    position: relative;
+    min-width: 0;
+    width: 265px;
+    height: var(--card-height);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-bg);
+    background-clip: border-box;
+    color: var(--card-color);    
+    overflow-wrap: break-word;
+    border: var(--card-border-width) solid var(--card-border-color);
+    
+    @include base.border-radius(var(--card-border-radius));
+    @include base.box-shadow(var(--card-box-shadow));
+    
+    overflow: hidden;
+    box-shadow: 7px 6px 0 base.$grey-950;
+
+    &__title {
+        margin-bottom: var(--card-title-spacer-y);
+        color: var(--card-title-color);
+    }
+
+    &__subtitle {
+        margin-bottom: var(--card-title-spacer-y);
+        color: var(--card-subtitle-color);
+    }
+
+    & img {
+        width: 100px;
+        height: 100px;
+        display: block;
+        margin: 1.5rem auto;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 800;
+        text-align: center;
+
+        &:hover {
+            color: base.$yellow;
+            cursor: pointer;
+        }
+    }
+
+    p {
+        font-size: .8rem;
+        text-align: left;
+        line-height: 1.5;
+        color: base.$grey-500;
+        font-weight: 500;
+
+        &::first-letter {
+            text-transform: capitalize;
+        }
+
+    }
+
+    &__footer {
+        margin-top: .5rem;
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            margin: 0 .5rem 0 0;
+        }
+
+        .author {
+            font-size: .75rem;
+            font-weight: 800;
+        }
+    }
+}
