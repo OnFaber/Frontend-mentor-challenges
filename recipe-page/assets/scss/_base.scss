@@ -6,15 +6,16 @@
 }
 
 html {
-    height: 100vh;
+    height: auto;
 }
 
 body {
     min-height: 100vh;    
+    padding-top: 1.5rem;
     
     @include center-column;
     
     font-family: $font-family;
-    background-color: $grey-900;
+    background-color: $body-bg-color;
     color: $white
 }

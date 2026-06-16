@@ -2,19 +2,7 @@
 // The designs were created to the following widths:
 // - Mobile: 375px
 // - Desktop: 1440px
-// ## Colors
-// - White: hsl(0, 0%, 100%)
-// - Stone 100: hsl(30, 54%, 90%)
-// - Stone 150: hsl(30, 18%, 87%)
-// - Stone 600: hsl(30, 10%, 34%)
-// - Stone 900: hsl(24, 5%, 18%)
-// - Brown 800: hsl(14, 45%, 36%)
-// - Rose 800: hsl(332, 51%, 32%)
-// - Rose 50: hsl(330, 100%, 98%)
-// ## Typography
-// ### Body Copy
 // - Font size (paragraph): 16px
-// ### Fonts
 // - Family: [Young Serif](https://fonts.google.com/specimen/Young+Serif)
 // - Weights: 400
 // - Family: [Outfit](https://fonts.google.com/specimen/Outfit)
@@ -25,11 +13,17 @@
 @use "sass:map";
 
 @font-face {
-    font-family: figtree;
-    src: url("../fonts/Inter-VariableFont_slnt,wght.ttf") format('truetype');
+  font-family: outfit;
+  src: url("../fonts/outfit/Outfit-VariableFont_wght.ttf") format("truetype");
 }
 
-$font-family: "figtree", sans-serif;
+@font-face {
+  font-family: youngSerif;
+  src: url("../fonts/young-serif/YoungSerif-Regular.ttf") format("truetype");
+}
+
+$font-family: "outfit", sans-serif;
+$font-family-secondary: "youngSerif", sans-serif;
 
 // Options
 // Quickly modify global styling by enabling or disabling optional features.
@@ -51,113 +45,132 @@ $black: hsl(0deg 0% 0%);
 // end gray-color-variables
 
 // scss-docs-start color-variables
-$green: hsl(75deg 94% 57%);
+$brown-800: hsl(14deg 45% 36%);
+$stone-100: hsl(30deg 54% 90%);
+$stone-150: hsl(30deg 18% 87%);
+$stone-600: hsl(30deg 10% 34%);
+$stone-900: hsl(24deg 5% 18%);
 $yellow: hsl(47deg 88% 63%);
+$green: hsl(75deg 94% 57%);
 $slate-300: hsl(212deg 45% 89%);
 $slate-500: hsl(216deg 15% 48%);
 $slate-900: hsl(218deg 44% 22%);
+$rose-50: hsl(330deg 100% 98%);
+$rose-800: hsl(332deg 51% 32%);
 
 // Body
 $body-fg-color: $white;
+$body-bg-color: $stone-100;
 
 // Components
 
 // border variables
 $border-width: 1px;
 $border-widths: (
-    1: 1px,
-    2: 2px,
-    3: 3px,
-    4: 4px,
-    5: 5px
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
 );
 $border-style: solid;
 $border-color: $grey-300;
-$border-color-translucent: rgba($black, .175);
+$border-color-translucent: rgba($black, 0.175);
 
 // border-radius-variables
-$border-radius: .75rem;
+$border-radius: 0.75rem;
+$border-radius-sm: 0.25rem !default;
+$border-radius-lg: 0.5rem !default;
+$border-radius-xl: 1rem !default;
+$border-radius-xxl: 2rem !default;
+$border-radius-pill: 50rem !default;
 
 // box-shadow-variables
-$box-shadow: 0 .5rem 1rem rgba($black, .15);
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
 
 // Spacing
 $spacer: 1rem;
 $spacers: (
-    0: 0,
-    1: $spacer * .25,
-    2: $spacer * .5,
-    3: $spacer,
-    4: $spacer * 1.5,
-    5: $spacer * 3,
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
 );
 
 // Card
 $card-spacer-y: $spacer;
 $card-spacer-x: $spacer;
-$card-height: 520px;
-$card-color: $body-fg-color;
+$card-height: auto;
+$card-color: $stone-600;
+$card-bg-color: $white;
 $card-border-width: $border-width;
 $card-border-color: $border-color-translucent;
-$card-border-radius: $border-radius;
+$card-border-radius: 1rem;
+$card-img-border-radius: 0.5rem;
 $card-box-shadow: null;
-$card-title-spacer-y: map.get($spacers, 2);
-$card-title-color: $body-fg-color;
+$card-title-spacer-y: map.get($spacers, 4);
+$card-title-color: $stone-900;
 $card-subtitle-color: $green;
 
 // mixins
 // Helper function to replace negative values with 0
 @function valid-radius($radius) {
-    $return: ();
-    
-    @each $value in $radius {
-        @if meta.type-of($value) == number {
-            $return: list.append($return, max($value, 0));
-        } @else {
-            $return: list.append($return, $value);
-        }
+  $return: ();
+
+  @each $value in $radius {
+    @if meta.type-of($value) == number {
+      $return: list.append($return, max($value, 0));
+    } @else {
+      $return: list.append($return, $value);
     }
-    
-    @return $return;
+  }
+
+  @return $return;
 }
 
 @mixin box-shadow($shadow...) {
-    @if $enable-shadows {
-        $result: ();
-        $has-single-value: null;
+  @if $enable-shadows {
+    $result: ();
+    $has-single-value: null;
 
-        @each $value in $shadow {
-            @if $value {
-                @if $value == none or $value == initial or $value == inherit or $value == unset {
-                    $has-single-value: true;
-                    $single-value: $value;
-                } @else {
-                    $result: list.append($result, $value, "comma");
-                }                
-            }
+    @each $value in $shadow {
+      @if $value {
+        @if $value == none or
+          $value == initial or
+          $value == inherit or
+          $value == unset
+        {
+          $has-single-value: true;
+          $single-value: $value;
+        } @else {
+          $result: list.append($result, $value, "comma");
         }
-
-        @if $has-single-value {
-            box-shadow: $single-value;
-        } @else if list.length($result) > 0 {
-            box-shadow: $result;
-        }
+      }
     }
+
+    @if $has-single-value {
+      box-shadow: $single-value;
+    } @else if list.length($result) > 0 {
+      box-shadow: $result;
+    }
+  }
 }
 
 // scss-docs-start border-radius-mixins
 @mixin border-radius($radius: $border-radius, $fallback-border-radius: false) {
-    @if $enable-rounded {
-        border-radius: valid-radius($radius);
-    } @else if $fallback-border-radius != false {
-        border-radius: $fallback-border-radius;
-    }
+  @if $enable-rounded {
+    border-radius: valid-radius($radius);
+  } @else if $fallback-border-radius != false {
+    border-radius: $fallback-border-radius;
+  }
 }
 
 @mixin center-column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;    
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
