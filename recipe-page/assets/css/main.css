@@ -151,7 +151,6 @@ table {
 tr {
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid hsl(30, 54%, 90%);
 }
 
 th {
